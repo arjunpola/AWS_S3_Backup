@@ -113,11 +113,15 @@ export class AwsService {
       let bucket = 's3://' + job.bucket;
 
       if (file.type === 'file') {
-        const filePath = path.dirname(file.path);
-        const dirPath = new URL(`file:///${filePath}`);
-        bucket += dirPath.pathname;
+        // const filePath = path.dirname(file.path);
+        // const dirPath = new URL(`file:///${filePath}`);
+        // bucket += dirPath.pathname;
+
+        // console.log("FilePath: ", filePath);
+        // console.log("DirPath: ", dirPath);
+        // console.log("Bucket: ", bucket);
         const fileInclude = '--include="' + path.basename(file.path) + '"';
-        s3Args = ['s3', 'sync', path.dirname(file.path), bucket, '--exclude="*"', fileInclude];
+        s3Args = ['s3', 'sync', '"' + path.dirname(file.path) + '"', bucket, '--exclude="*"', fileInclude];
       } else {
         const filePath = file.path;
         const dirPath = new URL(`file:///${filePath}`);
